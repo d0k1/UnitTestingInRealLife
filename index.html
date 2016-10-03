@@ -138,152 +138,241 @@
                 <section>
                     <h1>Unit-тестирование: когда, зачем, как</h1>
                     <p>
+                        <!--
                         <small>
                         <a href="http://focus-it.ru">Кирпиченков Денис</a> / <a href="http://twitter.com/dkirpichenkov">@dkirpichenkov</a>/ <a href="mailto:d0k1@mail.ru">d0k1@mail.ru</a>
                         <br/>
                         <br/>
                         <a href="https://d0k1.github.io/UnitTestingInRealLife/">d0k1.github.io/UnitTestingInRealLife/</a>
                         </small>
+                        -->
+                    </p>
+                </section>
+
+                <section>
+                    <h1>План</h1>
+                    <p>
+                        <ul>
+                            <li>о тестировании</li>
+                            <li>unit-тестирование</li>
+                            <li>junit: возможности и пример</li>
+                            <li>подмена объектов в тестах</li>
+                            <li>тест-дизайн</li>
+                            <li>разработка управляемая тестами</li>
+                            <li>практика</li>
+                        </ul>
                     </p>
                 </section>
 
                 <section>
                     <h1>Тестирование и ПО</h1>
                     <p>
+                        <ul>
+                            <li>сборка/компиляция проекта</li>
+                            <li>тестирование разработчиком реализации</li>
+                            <li>тестирование вручную</li>
+                        </ul>
                     </p>
                 </section>
 
                 <section>
-                    <h1>Тестирование в ручную</h1>
+                    <h1>Тестирование вручную</h1>
                     <p>
+                        <ul>
+                            <li>довольно дорого</li>
+                            <li>бывают ошибки</li>
+                        </ul>
                     </p>
                 </section>
 
                 <section>
-                    <h1>Автоматизированное тестирование</h1>
+                    <h1>Авто тестирование</h1>
                     <p>
+                        <ul>
+                            <li>не бесплатно</li>
+                            <li>программы тестируют другие программы</li>
+                            <li>минимум ошибок</li>
+                        </ul>
                     </p>
                 </section>
 
                 <section>
-                    <h1>Такое разное автотестирование</h1>
+                    <h1>Модульное (unit) тестирование</h1>
                     <p>
-                    </p>
-                </section>
-
-                <section>
-                    <h1>Unit-тестирование</h1>
-                    <p>
+                        <img src="img/unitTestingDiag.svg"/>
                     </p>
                 </section>
 
                 <section>
                     <h1>Интеграционное тестирование</h1>
                     <p>
+                        <img src="img/integrationTestingDiag.svg"/>
                     </p>
                 </section>
 
                 <section>
-                    <h1>Приемочное тестирование</h1>
+                    <h1>Функциональное тестирование</h1>
                     <p>
+                        <img src="img/uiTestDiag.svg"/>
                     </p>
                 </section>
 
                 <section>
-                    <h1>Java unit-тестирование</h1>
-                    <p>                        
-                    </p>
-                </section>
-
-                <section>
-                    <h1>Инструменты unit-тестирования</h1>
-                    <p>                        
-                    </p>
-                </section>
-
-                <section>
-                    <h1>Тестирование в IDE</h1>
+                    <h1>Пирамида</h1>
                     <p>
+                        <img src="img/automatedtestingpyramid.png" style="height: 550px;" />
                     </p>
                 </section>
 
                 <section>
-                    <h1>Тестирование во время сборки</h1>
+                    <h1>Пирамида</h1>
                     <p>
+                        <img src="img/softwaretestingicecreamconeantipattern.png"  style="height: 550px;" />                        
                     </p>
+                </section>
+
+                <section>
+                    <h1>Unit тестирование</h1>
+                        <pre style="width:auto;"><code data-trim class="java">package com.unittesting;
+
+public class Calculator {
+
+    public long multiply(long a, long b){
+        return a * b;
+    }
+}
+
+</code></pre>
                 </section>
 
                 <section>
                     <h1>Первый unit-тест</h1>
-                    <p>
-                    </p>
+<pre style="width:auto;"><code data-trim class="java">package com.unittesting;
+
+public class CalculatorMainTest {
+
+    public static void main(String args[]){
+        Calculator calculator = new Calculator();
+        long result = calculator.multiply(2L, 2L);
+        long expected = 4;
+        
+        if(result!=4){
+            System.out.println("Test failed. Expected: "
+                               +expected+" result: "+result);
+        }
+    }
+}
+</code></pre>
                 </section>
 
                 <section>
-                    <h1>Базовые возможности junit</h1>
-                    <p>
-                    </p>
+                    <h1>JUnit тест</h1>
+<pre style="width:auto;"><code data-trim class="java">package com.unittesting;
+
+import static org.junit.Assert.*;
+
+import org.junit.Test;
+
+public class CalculatorTest {
+
+    @Test
+    public void testMultiply() {
+        assertEqual(new Calculator().multiply(2L, 2L), 4L);
+    }
+
+}
+</code></pre>
                 </section>
 
                 <section>
-                    <h1>Расширенные возможности junit</h1>
-                    <p>
-                    </p>
+                    <h1>Возможности junit</h1>
+                    <ul>
+                        <li>все необходимые проверки (assert'ы)</li>
+                        <li>возможности подготовки теста</li>
+                        <li>интеграция в IDE</li>
+                        <li>интеграция в системы сборки</li>
+                    </ul>
                 </section>
 
                 <section>
-                    <h1>Тестироавние с учетом зависимостей</h1>
-                    <p>
-                    </p>
+                    <h1>Архитектура приложения</h1>
+                    <img src="img/layersDiag.svg"/>
+                </section>
+                <section>
+                    <h1>Зависимости при тестировании</h1>
+<pre style="width:auto;"><code data-trim class="java">package com.transaction.test.dao;
+
+public interface AccountDAO {
+
+    long getAccountBalance(long accountId);
+}</code></pre>
+<pre style="width:auto;"><code data-trim class="java">package com.transaction.test.dao;
+
+public interface TransactionDAO {
+
+    void saveTransaction(long accountId1, long accountId2, long amount);
+}</code></pre>
                 </section>
 
                 <section>
-                    <h1>Mocking</h1>
-                    <p>
-                    </p>
+<pre style="width:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+    if(accountId1<=0 || accountId2<=0)
+        throw new IllegalArgumentException("Wrong account");
+
+    if(amount<=0)
+        throw new IllegalArgumentException("amount can’t be negative");        
+
+    long balance = accountDAO.getAccountBalance(accountId1);
+    if(balance-amount<=0)
+        throw new UnsupportedOperationException("credit not available");
+    }
+    
+    transactionDAO.saveTransaction(accountId1, accountId2, amount);
+}
+
+</code></pre>
+                </section>
+
+                <section>
+                    <h1>Ненастоящие объекты</h1>
+                    <ul>
+                        <li>Stub - имитация поведения</li>
+                        <li>Mock - контроль при обращении</li>
+                    </ul>
+                </section>
+
+                <section>
+                    <h1>Ненастоящие объекты: stub</h1>
+                    <img src="img/stub.png"/>
+                </section>
+
+                <section>
+                    <h1>Ненастоящие объекты: mock</h1>
+                    <img src="img/mock.png"/>
                 </section>
 
                 <section>
                     <h1>Test driven development</h1>
-                    <p>
-                    </p>
+                    <img src="img/tdd-flowchart.png" style="height: 400px;" />
                 </section>
 
                 <section>
-                    <h1>Пример TDD</h1>
-                    <p>
-                    </p>
+                    <h1>Тесты:</h1>
+                    <ul>
+                        <li>экономят время</li>
+                        <li>проверяют больше</li>
+                        <li>фиксируют требования</li>
+                        <li>приводят к гибкому коду</li>
+                    </ul>
                 </section>
 
                 <section>
-                    <h1>Test failed</h1>
-                    <p>
-                    </p>
+                    <h1>Практическая часть</h1>
+                    <ul>
+                        <li>создание теста в Eclipse</li>
+                    </ul>
                 </section>
 
-                <section>
-                    <h1>Java-стек</h1>
-                    <p>
-                    </p>
-                </section>
-
-                <section>
-                    <h1>Java-стек</h1>
-                    <p>
-                    </p>
-                </section>
-
-                <section>
-                    <h1>Java debugger</h1>
-                    <p>
-                    </p>
-                </section>
-
-                <section>
-                    <h1>Свой твиттер</h1>
-                    <p>
-                    </p>
-                </section>
             </div>
         </div>
 
