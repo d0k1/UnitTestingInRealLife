@@ -48,6 +48,7 @@
     color: black;
     background: none;
     box-shadow: none;
+    max-height: none;
 }
 
 .reveal section img {
@@ -156,8 +157,8 @@
                             <li>о тестировании</li>
                             <li>unit-тестирование</li>
                             <li>junit: возможности и пример</li>
-                            <li>подмена объектов в тестах</li>
-                            <li>разработка управляемая тестами</li>
+                            <li>подмена объектов в тестах(Stub, Mock)</li>
+                            <li>разработка управляемая тестами (TDD, Test driven development)</li>
                             <li>практика</li>
                         </ul>
                     </p>
@@ -224,7 +225,7 @@
                 </section>
 
                 <section>
-                    <h1>Пирамида</h1>
+                    <h1>Мороженое</h1>
                     <p>
                         <img src="img/softwaretestingicecreamconeantipattern.png"  style="height: 550px;" />                        
                     </p>
@@ -245,20 +246,31 @@ public class Calculator {
                 </section>
 
                 <section>
+                    <h1>Состав теста</h1>
+                    <ul>
+                        <li>Подготовка (setup) </li>
+                        <li>Исполнение (execution) </li>
+                        <li>Проверка (assert) </li>
+                        <li>Очистка (cleanUp/tearDown) </li>
+                    </ul>
+                </section>
+
+                <section>
                     <h1>Первый unit-тест</h1>
 <pre style="width:auto;"><code data-trim class="java">package com.unittesting;
-
 public class CalculatorMainTest {
 
     public static void main(String args[]){
+        // Подготовка
         Calculator calculator = new Calculator();
+        // Исполнение
         long result = calculator.multiply(2L, 2L);
-        long expected = 4;
-        
+        // Проверка
         if(result!=4){
             System.out.println("Test failed. Expected: "
                                +expected+" result: "+result);
         }
+        // Очистка
     }
 }
 </code></pre>
@@ -269,18 +281,54 @@ public class CalculatorMainTest {
 <pre style="width:auto;"><code data-trim class="java">package com.unittesting;
 
 import static org.junit.Assert.*;
-
 import org.junit.Test;
 
 public class CalculatorTest {
 
     @Test
     public void testMultiply() {
+        // Подготовка, Исполнение, Проверка
         assertEqual(new Calculator().multiply(2L, 2L), 4L);
+        // очистка
     }
 
 }
 </code></pre>
+                </section>
+
+                <section>
+                <h1>Сравнение</h1>
+                    <table style="font-size:20pt;">
+                        <tr>
+                            <td>
+<pre style="margin-left:-50px; width:auto;"><code data-trim class="java">
+public class CalculatorMainTest {
+
+    public static void main(String args[]){
+        Calculator calculator = new Calculator();
+        long result = calculator.multiply(2L, 2L);
+        if(result!=4){
+            System.out.println("Test failed. Expected: "
+                               +expected+" result: "+result);
+        }
+    }
+}
+</code></pre>
+                            </td>
+                            <td>
+<pre style="width:auto;"><code data-trim class="java">
+public class CalculatorTest {
+
+    @Test
+    public void testMultiply() {
+        assertEqual(new Calculator().multiply(2L, 2L),
+                    4L);
+    }
+}
+</code></pre>
+                            </td>
+                        </tr>
+                    </table>
                 </section>
 
                 <section>
@@ -302,33 +350,104 @@ public class CalculatorTest {
 <pre style="width:auto;"><code data-trim class="java">package com.transaction.test.dao;
 
 public interface AccountDAO {
-
+    // Запрос баланса
     long getAccountBalance(long accountId);
 }</code></pre>
 <pre style="width:auto;"><code data-trim class="java">package com.transaction.test.dao;
 
 public interface TransactionDAO {
-
+    // Проведение перевода
     void saveTransaction(long accountId1, long accountId2, long amount);
 }</code></pre>
                 </section>
 
                 <section>
+                <h1>Перевод между счетами</h1>
 <pre style="width:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+    // проверить корректность Id счетов
+    // проверить корректность суммы перевода
+    // проверить баланс счета
+    // провести перевод
+}
+</code></pre>
+                </section>
+
+                <section>
+                <h1>Перевод между счетами</h1>
+<pre style="width:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+
+    // проверить корректность Id счетов
     if(accountId1<=0 || accountId2<=0)
         throw new IllegalArgumentException("Wrong account");
 
+    // ....
+}
+
+</code></pre>
+                </section>
+
+                <section>
+                <h1>Перевод между счетами</h1>
+<pre style="width:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+
+    // ....
+
+    // проверить корректность суммы перевода
     if(amount<=0)
         throw new IllegalArgumentException("amount can’t be negative");        
 
+    // ....
+}
+</code></pre>
+                </section>
+
+                <section>
+                <h1>Перевод между счетами</h1>
+<pre style="width:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+    // ....
+
+    // проверить баланс счета
+    long balance = accountDAO.getAccountBalance(accountId1);
+    if(balance-amount<=0)
+        throw new UnsupportedOperationException("credit not available");
+    }
+
+    // ....
+}
+</code></pre>
+                </section>
+
+                <section>
+                <h1>Перевод между счетами</h1>
+<pre style="width:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+    // ....
+    
+    // провести перевод
+    transactionDAO.saveTransaction(accountId1, accountId2, amount);
+}
+</code></pre>
+                </section>
+
+                <section>
+<pre style="width:auto; max-height:auto;"><code data-trim class="java">public void makeTransfer(long accountId1, long accountId2, long amount){
+
+    // проверить корректность Id счетов
+    if(accountId1<=0 || accountId2<=0)
+        throw new IllegalArgumentException("Wrong account");
+
+    // проверить корректность суммы перевода
+    if(amount<=0)
+        throw new IllegalArgumentException("amount can’t be negative");        
+
+    // проверить баланс счета
     long balance = accountDAO.getAccountBalance(accountId1);
     if(balance-amount<=0)
         throw new UnsupportedOperationException("credit not available");
     }
     
+    // провести перевод
     transactionDAO.saveTransaction(accountId1, accountId2, amount);
 }
-
 </code></pre>
                 </section>
 
@@ -369,6 +488,7 @@ public interface TransactionDAO {
                     <h1>Практическая часть</h1>
                     <ul>
                         <li>создание теста в Eclipse</li>
+                        <li>тестирование исключений</li>
                         <li>создание stub-объекта</li>
                     </ul>
                 </section>
