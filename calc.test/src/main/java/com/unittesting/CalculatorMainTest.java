@@ -4,7 +4,7 @@ public class CalculatorMainTest {
 
 	public static void main(String args[]){
 		Calculator calculator = new Calculator();
-		long result = calculator.multiply(2L, 2L);
+		long result = calculator.summ(2L, 2L);
 		long expected = 4;
 		
 		if(result!=4){

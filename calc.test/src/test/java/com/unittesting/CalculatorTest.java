@@ -8,7 +8,7 @@ public class CalculatorTest {
 
 	@Test
 	public void testMultiply() {
-		fail("Not yet implemented");
+		assertEquals(4L, new Calculator().summ(2L, 2L));
 	}
 
 }
