@@ -7,7 +7,7 @@ import org.junit.Test;
 public class CalculatorTest {
 
 	@Test
-	public void testMultiply() {
+	public void testSumm() {
 		assertEquals(4L, new Calculator().summ(2L, 2L));
 	}
 
