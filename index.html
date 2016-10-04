@@ -267,8 +267,8 @@ public class CalculatorMainTest {
         long result = calculator.multiply(2L, 2L);
         // Проверка
         if(result!=4){
-            System.out.println("Test failed. Expected: "
-                               +expected+" result: "+result);
+            System.out.println("Test failed. Expected: 4, "
+                              +"result: "+result);
         }
         // Очистка
     }
@@ -308,8 +308,8 @@ public class CalculatorMainTest {
         Calculator calculator = new Calculator();
         long result = calculator.multiply(2L, 2L);
         if(result!=4){
-            System.out.println("Test failed. Expected: "
-                               +expected+" result: "+result);
+            System.out.println("Test failed. Expected: 4, "
+                               +"result: "+result);
         }
     }
 }
@@ -332,13 +332,28 @@ public class CalculatorTest {
                 </section>
 
                 <section>
-                    <h1>Возможности junit</h1>
-                    <ul>
-                        <li>все необходимые проверки (assert'ы)</li>
-                        <li>возможности подготовки теста</li>
-                        <li>интеграция в IDE</li>
-                        <li>интеграция в системы сборки</li>
-                    </ul>
+                    <h1>Состав junit теста</h1>
+<pre style="width:auto;"><code data-trim class="java">public class FoobarTest {
+    // Перед началом работы с классом
+    @BeforeClass
+    public static void setUpClass() {}
+    
+    // Перед каждым тестом
+    @Before
+    public void setUp() {}
+
+    // Тест
+    @Test
+    public void testMethod() {}
+
+    // После каждого теста
+    @After
+    public void tearDown() {}
+ 
+    // После работы с классом
+    @AfterClass
+    public static void tearDownClass() {}
+}</code></pre>
                 </section>
 
                 <section>
